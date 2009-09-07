@@ -299,7 +299,7 @@ static void init_exception()
 
 int main()
 {
-	init_graphics();
+	init_graphics(1);
 	init_exception();
 	init_timer();
 

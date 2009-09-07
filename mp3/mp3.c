@@ -312,7 +312,7 @@ int main()
 	int i;
 
 	malloc_init();
-	init_graphics();
+	init_graphics(1);
 	init_exception();
 	init_timer();
 

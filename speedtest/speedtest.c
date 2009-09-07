@@ -66,7 +66,7 @@ int main()
 	uint16_t random = 0xbeefu;
 	char buf[10];
 	
-	init_graphics();
+	init_graphics(1);
 	init_exception();
 	init_timer();
 	

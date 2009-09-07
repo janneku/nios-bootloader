@@ -291,7 +291,7 @@ int main()
 
 	put_string("\nBOOTLOADER " __DATE__ " " __TIME__ "\n\n");
 
-	init_graphics();
+	init_graphics(1);
 	init_exception();
 	init_timer();
 

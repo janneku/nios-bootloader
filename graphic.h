@@ -58,6 +58,6 @@ void draw_pal_image_double(struct IMAGE *target, int x, int y,
 void shade_palette(uint16_t *palette, const uint16_t *from, int shade);
 
 void extract_image(struct PAL_IMAGE *image, const unsigned char *data);
-void init_graphics();
+void init_graphics(int highres);
 
 #endif

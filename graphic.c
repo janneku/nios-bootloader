@@ -11,7 +11,7 @@ struct IMAGE screen;
 void plot(struct IMAGE *image, int x, int y, uint16_t c)
 {
 #ifdef DEBUG
-	if (x < 0 || y < 0 || x >= image->width || y >= image->height)
+	if (x < 0 || y < 0 || x >= (int)image->width || y >= (int)image->height)
 		bug();
 #endif
 	image->pixels[x + y * image->width] = c;
@@ -193,9 +193,15 @@ void extract_image(struct PAL_IMAGE *image, const unsigned char *data)
 	}
 }
 
-void init_graphics()
+void init_graphics(int highres)
 {
-	screen.width = SCR_WIDTH;
-	screen.height = SCR_HEIGHT;
+	/* TODO: write mode to hardware */
+	if (highres) {
+		screen.width = SCR_WIDTH;
+		screen.height = SCR_HEIGHT;
+	} else {
+		screen.width = SCR_WIDTH / 2;
+		screen.height = SCR_HEIGHT / 2;
+	}
 	screen.pixels = (void *)(FRAMEBUFFER | 0x80000000UL);
 }
