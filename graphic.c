@@ -3,7 +3,10 @@
  */
 #include "graphic.h"
 #include "string.h"
+#include "utils.h"
 #include "bug.h"
+#include "io.h"
+#include "def.h"
 #include "system.h"
 
 struct IMAGE screen;
@@ -193,15 +196,43 @@ void extract_image(struct PAL_IMAGE *image, const unsigned char *data)
 	}
 }
 
+static uint16_t framebuffer[SCR_WIDTH * SCR_HEIGHT];
+
+void flip_page()
+{
+	int i;
+
+	/* Varmistetaan että kirjoitukset näkyy muistissa */
+	for (i = 0; i < NIOS2_DCACHE_SIZE; i += NIOS2_DCACHE_LINE_SIZE) {
+		flush_dcache(i);
+	}
+
+	if (screen.width != SCR_WIDTH / 2)
+		return;
+
+	IOWR(FRAMEBUFFER, 0, (unsigned long)screen.pixels - RAM);
+
+	if (screen.pixels == framebuffer) {
+		screen.pixels = &framebuffer[SCR_WIDTH * SCR_HEIGHT / 4];
+	} else {
+		screen.pixels = framebuffer;
+	}
+}
+
 void init_graphics(int highres)
 {
-	/* TODO: write mode to hardware */
+	uint8_t *vga_mode = (void *)(VGA_MODE | 0x80000000UL);
+
 	if (highres) {
 		screen.width = SCR_WIDTH;
 		screen.height = SCR_HEIGHT;
+		*vga_mode = 0;
 	} else {
 		screen.width = SCR_WIDTH / 2;
 		screen.height = SCR_HEIGHT / 2;
+		*vga_mode = 1;
 	}
-	screen.pixels = (void *)(FRAMEBUFFER | 0x80000000UL);
+	screen.pixels = framebuffer;
+
+	IOWR(FRAMEBUFFER, 0, (unsigned long)framebuffer - RAM);
 }

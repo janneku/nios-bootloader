@@ -85,6 +85,7 @@ static void messagebox(const char *s)
 	draw_string_shadow(&screen,
 			   (SCR_WIDTH - get_text_width("Press enter")) / 2,
 			   SCR_HEIGHT / 2 + get_text_height(), "Press enter");
+	flip_page();
 
 	key_status.enter = 0;
 	while (!key_status.enter) ;
@@ -92,6 +93,7 @@ static void messagebox(const char *s)
 	/* poistetaan teksti */
 	copy_pal_image(&screen, 0, SCR_HEIGHT / 2, SCR_WIDTH,
 		       get_text_height()*2 + 1, &tausta, 0, SCR_HEIGHT / 2);
+	flip_page();
 }
 
 static void load_program(struct FAT32_FILE *bin)
@@ -128,6 +130,7 @@ static void load_program(struct FAT32_FILE *bin)
 	for (i = 0; i < 32; i++) {
 		shade_palette(palette, tausta_png_palette, 32 - i);
 		draw_pal_image(&screen, 0, 0, &tausta);
+		flip_page();
 	}
 	tausta.palette = tausta_png_palette;
 	fill_rect(&screen, 0, 0, SCR_WIDTH, SCR_HEIGHT, BLACK);
@@ -322,6 +325,7 @@ int main()
 	for (i = 0; i < 32; i++) {
 		shade_palette(palette, tausta_png_palette, i);
 		draw_pal_image(&screen, 0, 0, &tausta);
+		flip_page();
 	}
 	tausta.palette = tausta_png_palette;
 	draw_pal_image(&screen, 0, 0, &tausta);
@@ -330,6 +334,7 @@ int main()
 	draw_string_shadow(&screen, 0, SCR_HEIGHT - get_text_height() - 1,
 			   "Compiled at " __DATE__ " " __TIME__);
 #endif
+	flip_page();
 
 	while (load_fs(&dir))
 		messagebox("Please insert SD-card");

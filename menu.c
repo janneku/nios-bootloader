@@ -143,7 +143,7 @@ void show_menu()
 		y += get_text_height();
 		x = posx;
 	}
-
+	flip_page();
 }
 
 int move_menu(int direction)

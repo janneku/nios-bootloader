@@ -27,6 +27,7 @@
 #define PS2                  0x018810e8
 #define FRAMEBUFFER_SIZE     524288
 #define FRAMEBUFFER          0x01800000
+#define VGA_MODE             0x02000000
 #define TIMER_SIZE           16
 #define TIMER_IRQ            3
 #define TIMER                0x01881020
