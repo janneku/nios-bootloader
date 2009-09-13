@@ -234,5 +234,5 @@ void init_graphics(int highres)
 	}
 	screen.pixels = framebuffer;
 
-	IOWR(FRAMEBUFFER, 0, (unsigned long)framebuffer - RAM);
+	IOWR(FRAMEBUFFER, 0, (unsigned long)framebuffer);
 }
