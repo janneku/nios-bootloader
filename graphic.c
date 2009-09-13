@@ -212,9 +212,8 @@ void flip_page()
 
 	IOWR(VGA_MODE, 1, (unsigned long)screen.pixels);
 
-	if (screen.pixels == framebuffer) {
-		screen.pixels = &framebuffer[SCR_WIDTH * SCR_HEIGHT / 4];
-	} else {
+	screen.pixels += SCR_WIDTH * SCR_HEIGHT / 4;
+	if (screen.pixels == &framebuffer[SCR_WIDTH * SCR_HEIGHT]) {
 		screen.pixels = framebuffer;
 	}
 }
