@@ -210,7 +210,7 @@ void flip_page()
 	if (screen.width != SCR_WIDTH / 2)
 		return;
 
-	IOWR(FRAMEBUFFER, 0, (unsigned long)screen.pixels - RAM);
+	IOWR(VGA_MODE, 1, (unsigned long)screen.pixels);
 
 	if (screen.pixels == framebuffer) {
 		screen.pixels = &framebuffer[SCR_WIDTH * SCR_HEIGHT / 4];
@@ -221,18 +221,16 @@ void flip_page()
 
 void init_graphics(int highres)
 {
-	uint8_t *vga_mode = (void *)(VGA_MODE | 0x80000000UL);
-
 	if (highres) {
 		screen.width = SCR_WIDTH;
 		screen.height = SCR_HEIGHT;
-		*vga_mode = 0;
+		IOWR(VGA_MODE, 0, 0);
 	} else {
 		screen.width = SCR_WIDTH / 2;
 		screen.height = SCR_HEIGHT / 2;
-		*vga_mode = 1;
+		IOWR(VGA_MODE, 0, 1);
 	}
 	screen.pixels = framebuffer;
 
-	IOWR(FRAMEBUFFER, 0, (unsigned long)framebuffer);
+	IOWR(VGA_MODE, 1, (unsigned long)framebuffer);
 }

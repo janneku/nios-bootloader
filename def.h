@@ -4,7 +4,7 @@
 #include "system.h"
 
 #define NIOS2_ICACHE_SIZE 4096
-#define NIOS2_DCACHE_SIZE 4096
+#define NIOS2_DCACHE_SIZE 8192
 #define NIOS2_ICACHE_LINE_SIZE 32
 #define NIOS2_DCACHE_LINE_SIZE 32
 
