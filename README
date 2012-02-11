@@ -1,0 +1,10 @@
+A graphical bootloader for Nios
+Developed for Altera DE2 FPGA board
+
+Copyright 2011 Janne Kulmala <janne.t.kulmala@iki.fi>,
+Juho Järvinen <juho.jarvinen@tut.fi>
+
+Program code and resources are licensed with GNU LGPL 2.1. See
+COPYING.LGPL file.
+
+
